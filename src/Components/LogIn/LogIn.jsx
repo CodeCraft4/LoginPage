@@ -1,11 +1,15 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../../Firebase/firebase";
+import { auth, db } from "../../Firebase/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { AuthProvider } from "../../context/ContextApi";
 
-const LogIn = (props) => {
+const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const userInfo = collection(db, "admins");
 
   const navigate = useNavigate();
 
@@ -20,70 +24,84 @@ const LogIn = (props) => {
     await signInWithEmailAndPassword(auth, email, password)
       .then((cr) => {
         console.log(cr, ">>>>>>>>>>>?????????? oLD uSER");
-        navigate("/home");
+        navigate("home");
       })
       .catch((err) => {
         console.log(err.message);
       });
+
+    if (email && password) {
+      await addDoc(userInfo, {
+        Email: email,
+        Password: password,
+      })
+        .then((ref) => console.log("Refrence::::", ref.id))
+        .catch((er) => console.log(er.message));
+      alert("Successfully ");
+    } else {
+      console.log("somthing went wrong");
+    }
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        backgroundImage:
-          "url(https://images.pexels.com/photos/3648850/pexels-photo-3648850.jpeg?auto=compress&cs=tinysrgb&w=600)",
-        height: "100vh",
-        backgroundSize: "100% 100%",
-        alignItems: "center",
-        textAlign: "center",
-        justifyContent: "center",
-      }}
-    >
-      <form style={formStyle} onSubmit={handleSignInForm}>
-        <h1
-          style={{
-            fontFamily: "monospace",
-          }}
-        >
-          Sign In
-        </h1>
-        <br />
-        <br />
-        <input
-          type="email"
-          placeholder="Enter Your Email"
-          style={inputStyle}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter Your Password"
-          style={inputStyle}
-        />
-        <br />
-        <br />
-        <input
-          type="submit"
-          value="Send"
-          style={submitBtn}
-          onClick={errorShown}
-          id="submit"
-        />
-        <br />
-        <br />
-        <p>
-          Create new Account{" "}
-          <Link to={"/signUp"}>
-            <b>Sign Up</b>
-          </Link>
-        </p>
-      </form>
-    </div>
+    <AuthProvider>
+      <div
+        style={{
+          display: "flex",
+          backgroundImage:
+            "url(https://images.pexels.com/photos/3648850/pexels-photo-3648850.jpeg?auto=compress&cs=tinysrgb&w=600)",
+          height: "100vh",
+          backgroundSize: "100% 100%",
+          alignItems: "center",
+          textAlign: "center",
+          justifyContent: "center",
+        }}
+      >
+        <form style={formStyle} onSubmit={handleSignInForm}>
+          <h1
+            style={{
+              fontFamily: "monospace",
+            }}
+          >
+            Sign In
+          </h1>
+          <br />
+          <br />
+          <input
+            type="email"
+            placeholder="Enter Your Email"
+            style={inputStyle}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <br />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter Your Password"
+            style={inputStyle}
+          />
+          <br />
+          <br />
+          <input
+            type="submit"
+            value="Send"
+            style={submitBtn}
+            onClick={errorShown}
+            id="submit"
+          />
+          <br />
+          <br />
+          <p>
+            Create new Account{" "}
+            <Link to={"/signUp"}>
+              <b>Sign Up</b>
+            </Link>
+          </p>
+        </form>
+      </div>
+    </AuthProvider>
   );
 };
 
@@ -105,6 +123,7 @@ const inputStyle = {
   borderBottom: "1px solid gray",
   background: "hsla(260,10%,10%,.2)",
   margin: 3,
+  color: "white",
 };
 
 const submitBtn = {

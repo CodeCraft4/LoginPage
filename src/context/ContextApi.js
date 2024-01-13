@@ -1,17 +1,48 @@
-import { useState } from "react";
-import { createContext } from "react";
-import { useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../Firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
-const authContext = createContext();
+const AuthContext = createContext();
 
-export const authProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
 
+  const [currentUser, setCurrntUser] = useState(null);
+
+  useEffect(() => {
+    const User = onAuthStateChanged(auth, async (user) => {
+      try {
+        if (user) {
+          const existsUser = doc(db, "admins", user?.uid);
+          const loggedIn = await getDoc(existsUser);
+          if (loggedIn) {
+            setCurrntUser(loggedIn);
+          } else {
+            const newExistUser = doc(db, "local", user?.uid);
+            const newloggedIn = await getDoc(newExistUser);
+            setCurrntUser(newloggedIn);
+          }
+          console.log(loggedIn, "<<<<<<DDDDDDDDD>>>>>>>>>>>>>>>");
+        } else {
+          setCurrntUser(null);
+        }
+      } catch (error) {
+        alert(error.messge);
+      }
+    });
+
+    return () => {
+      User();
+    };
+  }, []);
+
   return (
-    <authContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, currentUser }}>
       {children}
-    </authContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
-export const useAuthContext = () => useContext(authContext);
+export const useAuthContext = () => useContext(AuthContext);

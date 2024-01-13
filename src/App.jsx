@@ -5,21 +5,28 @@ import About from "./Pages/About/Index";
 import Contact from "./Pages/Contact/Index";
 import LogIn from "./Components/LogIn/LogIn";
 import SignUp from "./Components/LogIn/SignUp";
-import authProvider from "./context/ContextApi";
+import {AuthProvider} from "./context/ContextApi";
+import Layout from "./Components/Layout/Layout";
+import Blogs from "./Pages/Blogs/Index";
+import Setting from "./Pages/Setting/Index";
 
 const App = () => {
   return (
-    <authProvider>
+    <AuthProvider>
       <Routes>
         <Route>
           <Route path="/" element={<LogIn />} />
-          <Route path="/signUp" element={<SignUp />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route ptah="/dashboard" element={<Layout />}>
+            <Route path="signUp" element={<SignUp />} />
+            <Route path="home" element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="blogs" element={<Blogs />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="setting" element={<Setting />} />
+          </Route>
         </Route>
       </Routes>
-    </authProvider>
+    </AuthProvider>
   );
 };
 
