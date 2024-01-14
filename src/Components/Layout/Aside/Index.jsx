@@ -1,24 +1,15 @@
 import React from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
 import { Avatar } from "@mui/material";
+import Home from "Pages/Home/Index";
+import About from "Pages/About/Index";
+import Blogs from "Pages/Blogs/Index";
+import Contact from "Pages/Contact/Index";
+import Setting from "Pages/Setting/Index";
 // import { collection, getDocs } from "firebase/firestore";
 // import { useState } from "react";
 // import { useEffect } from "react";
 // import { db } from "../../../Firebase/firebase";
-import Home from "../../../Pages/Home/Index";
-import About from "../../../Pages/About/Index";
-import Blogs from "../../../Pages/Blogs/Index";
-import Contact from "../../../Pages/Contact/Index";
-import Setting from "../../../Pages/Setting/Index";
-import {
-  Article,
-  ContactMail,
-  HomeMini,
-  LoginOutlined,
-  Logout,
-  Settings,
-} from "@mui/icons-material";
-
 // const userEmail = collection(db, "admins");
 
 const AsideNav = () => {
@@ -57,9 +48,9 @@ const AsideNav = () => {
           style={{
             width: "200px",
             height: "200px",
-            backgroundImage:
-              "url(https://images.pexels.com/photos/19781449/pexels-photo-19781449/free-photo-of-close-up-of-an-eagle.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load)",
+            backgroundImage: "linear-gradient(to right,pink,aqua)",
             objectFit: "cover",
+            borderRadius: "50%",
             border: "1px solid orange",
             margin: "15%",
           }}
@@ -67,10 +58,9 @@ const AsideNav = () => {
         <ul>
           <li
             style={{
-              padding: "1em",
+              padding: ".9em",
             }}
           >
-            <HomeMini />
             <NavLink
               to={"home"}
               style={({ isActive }) => {
@@ -86,10 +76,9 @@ const AsideNav = () => {
           </li>
           <li
             style={{
-              padding: "1em",
+              padding: ".9em",
             }}
           >
-            <LoginOutlined />
             <NavLink
               to={"about"}
               style={({ isActive }) => {
@@ -105,10 +94,9 @@ const AsideNav = () => {
           </li>
           <li
             style={{
-              padding: "1em",
+              padding: ".9em",
             }}
           >
-            <Article />
             <NavLink
               to={"blogs"}
               style={({ isActive }) => {
@@ -124,10 +112,9 @@ const AsideNav = () => {
           </li>
           <li
             style={{
-              padding: "1em",
+              padding: ".9em",
             }}
           >
-            <ContactMail />
             <NavLink
               to={"contact"}
               style={({ isActive }) => {
@@ -143,10 +130,9 @@ const AsideNav = () => {
           </li>
           <li
             style={{
-              padding: "1em",
+              padding: ".9em",
             }}
           >
-            <Settings />
             <NavLink
               to={"setting"}
               style={({ isActive }) => {
@@ -163,10 +149,9 @@ const AsideNav = () => {
           <hr />
           <li
             style={{
-              padding: "1em",
+              padding: ".9em",
             }}
           >
-            <Logout />
             <NavLink
               to={"/"}
               style={{

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../Firebase/firebase";
@@ -9,12 +8,6 @@ const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const errorShown = () => {
-    if (!(name && email && password)) {
-      alert("please create the account for Sign In");
-    }
-  };
-
   const handleSubmitUser = async (e) => {
     e.preventDefault();
 
@@ -23,8 +16,14 @@ const LogIn = () => {
         console.log(cr, "Successfully....User");
         alert("Successfully");
       })
-      .catch((er) => {
-        console.log(er, "ERRRRRRRRRRRRRRR");
+      .catch((error) => {
+        if (!(email && password)) {
+          console.log(error);
+          const Error = document.querySelectorAll("input");
+          for (let i = 0; i < Error.length; i++) {
+            Error[i].style.borderBottom = "1px solid red";
+          }
+        }
       });
   };
 
@@ -33,9 +32,9 @@ const LogIn = () => {
       style={{
         display: "flex",
         backgroundImage:
-          "url(https://images.pexels.com/photos/3648850/pexels-photo-3648850.jpeg?auto=compress&cs=tinysrgb&w=600)",
+          "url(https://images.pexels.com/photos/937980/pexels-photo-937980.jpeg?auto=compress&cs=tinysrgb&w=600)",
         height: "100vh",
-        backgroundSize: "100% 100%",
+        backgroundSize: "cover",
         alignItems: "center",
         textAlign: "center",
         justifyContent: "center",
@@ -76,16 +75,13 @@ const LogIn = () => {
         />
         <br />
         <br />
-        <input
-          type="submit"
-          value="Send"
-          style={submitBtn}
-          onClick={errorShown}
-        />
+        <button type="submit" style={submitBtn}>
+          Send
+        </button>
         <br />
         <br />
         <p>
-          Create new Account
+          Already have Account
           <Link to={"/"}>
             <b>Sign In</b>
           </Link>

@@ -1,35 +1,38 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, db } from "../../Firebase/firebase";
-import { addDoc, collection } from "firebase/firestore";
-import { AuthProvider } from "../../context/ContextApi";
+import { auth } from "../../Firebase/firebase";
+import { AuthProvider } from "context/ContextApi";
+import { SpeedOutlined } from "@mui/icons-material";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const userInfo = collection(db, "admins");
+  // const userInfo = collection(db, "admins");
 
   const navigate = useNavigate();
-
-  const errorShown = () => {
-    if (!(email && password)) {
-      alert("please fill the Input fields for Sign In");
-    }
-  };
 
   const handleSignInForm = async (e) => {
     e.preventDefault();
     await signInWithEmailAndPassword(auth, email, password)
-      .then((cr) => {
-        console.log(cr, ">>>>>>>>>>>?????????? oLD uSER");
+      .then((result) => {
+        console.log(result, ">>>>>>>>>>>?????????? OLD uSER");
         navigate("home");
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch((er) => {
+        console.log(er);
+        if (
+          !(email && password) ||
+          (email &&
+            password !== signInWithEmailAndPassword(auth, email, password))
+        ) {
+          const Error = document.querySelectorAll("input");
+          for (let i = 0; i < Error.length; i++) {
+            Error[i].style.borderBottom = "1px solid red";
+          }
+        }
       });
-
     // if (email && password) {
     //   await addDoc(userInfo, {
     //     Email: email,
@@ -49,9 +52,9 @@ const LogIn = () => {
         style={{
           display: "flex",
           backgroundImage:
-            "url(https://images.pexels.com/photos/3648850/pexels-photo-3648850.jpeg?auto=compress&cs=tinysrgb&w=600)",
+            "url(https://images.pexels.com/photos/937980/pexels-photo-937980.jpeg?auto=compress&cs=tinysrgb&w=600)",
           height: "100vh",
-          backgroundSize: "100% 100%",
+          backgroundSize: "cover",
           alignItems: "center",
           textAlign: "center",
           justifyContent: "center",
@@ -84,13 +87,9 @@ const LogIn = () => {
           />
           <br />
           <br />
-          <input
-            type="submit"
-            value="Send"
-            style={submitBtn}
-            onClick={errorShown}
-            id="submit"
-          />
+          <button type="submit" style={submitBtn} id="submit">
+            Send
+          </button>
           <br />
           <br />
           <p>
