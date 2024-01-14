@@ -11,32 +11,32 @@ export const AuthProvider = ({ children }) => {
 
   const [currentUser, setCurrntUser] = useState(null);
 
-  useEffect(() => {
-    const User = onAuthStateChanged(auth, async (user) => {
-      try {
-        if (user) {
-          const existsUser = doc(db, "admins", user?.uid);
-          const loggedIn = await getDoc(existsUser);
-          if (loggedIn) {
-            setCurrntUser(loggedIn);
-          } else {
-            const newExistUser = doc(db, "local", user?.uid);
-            const newloggedIn = await getDoc(newExistUser);
-            setCurrntUser(newloggedIn);
-          }
-          console.log(loggedIn, "<<<<<<DDDDDDDDD>>>>>>>>>>>>>>>");
-        } else {
-          setCurrntUser(null);
-        }
-      } catch (error) {
-        alert(error.messge);
-      }
-    });
+  // useEffect(() => {
+  //   const User = onAuthStateChanged(auth, async (user) => {
+  //     try {
+  //       if (user) {
+  //         const existsUser = doc(db, "admins", user?.uid);
+  //         const loggedIn = await getDoc(existsUser);
+  //         if (loggedIn) {
+  //           setCurrntUser(loggedIn);
+  //         } else {
+  //           const newExistUser = doc(db, "local", user?.uid);
+  //           const newloggedIn = await getDoc(newExistUser);
+  //           setCurrntUser(newloggedIn);
+  //         }
+  //         console.log(loggedIn, "<<<<<<DDDDDDDDD>>>>>>>>>>>>>>>");
+  //       } else {
+  //         setCurrntUser(null);
+  //       }
+  //     } catch (error) {
+  //       alert(error.messge);
+  //     }
+  //   });
 
-    return () => {
-      User();
-    };
-  }, []);
+  //   return () => {
+  //     User();
+  //   };
+  // }, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser, currentUser }}>

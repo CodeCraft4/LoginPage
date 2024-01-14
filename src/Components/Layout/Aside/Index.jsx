@@ -1,13 +1,34 @@
 import React from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
+import { Avatar } from "@mui/material";
+import { collection, getDocs } from "firebase/firestore";
+import { useState } from "react";
+import { useEffect } from "react";
+import { db } from "../../../Firebase/firebase";
 import Home from "../../../Pages/Home/Index";
 import About from "../../../Pages/About/Index";
 import Blogs from "../../../Pages/Blogs/Index";
 import Contact from "../../../Pages/Contact/Index";
-import { Avatar } from "@mui/material";
 import Setting from "../../../Pages/Setting/Index";
 
+const userEmail = collection(db, "admins");
+
 const AsideNav = () => {
+  const [update, setUpdate] = useState([]);
+
+  const fetchData = async () => {
+    const Email = await getDocs(userEmail);
+    const emailData = Email.docs.map((ev) => ({
+      ...ev.data(),
+      id: ev.id,
+    }));
+    setUpdate(emailData);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div
       style={{
@@ -28,8 +49,9 @@ const AsideNav = () => {
           style={{
             width: "200px",
             height: "200px",
-            background: "#753966",
-            borderRadius: "50%",
+            backgroundImage:
+              "url(https://images.pexels.com/photos/19781449/pexels-photo-19781449/free-photo-of-close-up-of-an-eagle.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load)",
+            objectFit: "cover",
             border: "1px solid orange",
             margin: "15%",
           }}
@@ -166,15 +188,18 @@ const AsideNav = () => {
           >
             Dashboard
           </h1>
+          {/* {update?.map((e, index) => ( */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
             }}
+            // key={index}
           >
-            <Avatar />
-            <span>avatar@.com</span>
+            {/* <Avatar /> <span>{e.Email ? e.Email : "admin@gmail.com"}</span> */}
+            <Avatar /> <span>user@gmail.com</span>
           </div>
+          {/* ))} */}
         </nav>
         <Routes>
           <Route path="home" element={<Home />} />

@@ -30,17 +30,17 @@ const LogIn = () => {
         console.log(err.message);
       });
 
-    if (email && password) {
-      await addDoc(userInfo, {
-        Email: email,
-        Password: password,
-      })
-        .then((ref) => console.log("Refrence::::", ref.id))
-        .catch((er) => console.log(er.message));
-      alert("Successfully ");
-    } else {
-      console.log("somthing went wrong");
-    }
+    // if (email && password) {
+    //   await addDoc(userInfo, {
+    //     Email: email,
+    //     Password: password,
+    //   })
+    //     .then((ref) => console.log("Refrence::::", ref.id))
+    //     .catch((er) => console.log(er.message));
+    //   alert("Successfully ");
+    // } else {
+    //   console.log("somthing went wrong");
+    // }
   };
 
   return (
