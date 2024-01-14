@@ -3,7 +3,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../Firebase/firebase";
 import { AuthProvider } from "context/ContextApi";
-import { SpeedOutlined } from "@mui/icons-material";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
