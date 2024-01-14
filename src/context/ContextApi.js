@@ -1,15 +1,15 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../Firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+// import { onAuthStateChanged } from "firebase/auth";
+// import { auth, db } from "../Firebase/firebase";
+// import { doc, getDoc } from "firebase/firestore";
+// import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
 
-  const [currentUser, setCurrntUser] = useState(null);
+  // const [currentUser, setCurrntUser] = useState(null);
 
   // useEffect(() => {
   //   const User = onAuthStateChanged(auth, async (user) => {
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   // }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, currentUser }}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );

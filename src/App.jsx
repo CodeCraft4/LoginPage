@@ -5,14 +5,13 @@ import About from "./Pages/About/Index";
 import Contact from "./Pages/Contact/Index";
 import LogIn from "./Components/LogIn/LogIn";
 import SignUp from "./Components/LogIn/SignUp";
-import {AuthProvider} from "./context/ContextApi";
 import Layout from "./Components/Layout/Layout";
 import Blogs from "./Pages/Blogs/Index";
 import Setting from "./Pages/Setting/Index";
 
 const App = () => {
   return (
-    <AuthProvider>
+    <>
       <Routes>
         <Route>
           <Route path="/" element={<LogIn />} />
@@ -26,7 +25,7 @@ const App = () => {
           </Route>
         </Route>
       </Routes>
-    </AuthProvider>
+    </>
   );
 };
 

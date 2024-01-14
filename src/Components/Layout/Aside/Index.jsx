@@ -1,33 +1,41 @@
 import React from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
 import { Avatar } from "@mui/material";
-import { collection, getDocs } from "firebase/firestore";
-import { useState } from "react";
-import { useEffect } from "react";
-import { db } from "../../../Firebase/firebase";
+// import { collection, getDocs } from "firebase/firestore";
+// import { useState } from "react";
+// import { useEffect } from "react";
+// import { db } from "../../../Firebase/firebase";
 import Home from "../../../Pages/Home/Index";
 import About from "../../../Pages/About/Index";
 import Blogs from "../../../Pages/Blogs/Index";
 import Contact from "../../../Pages/Contact/Index";
 import Setting from "../../../Pages/Setting/Index";
+import {
+  Article,
+  ContactMail,
+  HomeMini,
+  LoginOutlined,
+  Logout,
+  Settings,
+} from "@mui/icons-material";
 
-const userEmail = collection(db, "admins");
+// const userEmail = collection(db, "admins");
 
 const AsideNav = () => {
-  const [update, setUpdate] = useState([]);
+  // const [update, setUpdate] = useState([]);
 
-  const fetchData = async () => {
-    const Email = await getDocs(userEmail);
-    const emailData = Email.docs.map((ev) => ({
-      ...ev.data(),
-      id: ev.id,
-    }));
-    setUpdate(emailData);
-  };
+  // const fetchData = async () => {
+  //   const Email = await getDocs(userEmail);
+  //   const emailData = Email.docs.map((ev) => ({
+  //     ...ev.data(),
+  //     id: ev.id,
+  //   }));
+  //   setUpdate(emailData);
+  // };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   return (
     <div
@@ -62,6 +70,7 @@ const AsideNav = () => {
               padding: "1em",
             }}
           >
+            <HomeMini />
             <NavLink
               to={"home"}
               style={({ isActive }) => {
@@ -80,6 +89,7 @@ const AsideNav = () => {
               padding: "1em",
             }}
           >
+            <LoginOutlined />
             <NavLink
               to={"about"}
               style={({ isActive }) => {
@@ -98,6 +108,7 @@ const AsideNav = () => {
               padding: "1em",
             }}
           >
+            <Article />
             <NavLink
               to={"blogs"}
               style={({ isActive }) => {
@@ -116,6 +127,7 @@ const AsideNav = () => {
               padding: "1em",
             }}
           >
+            <ContactMail />
             <NavLink
               to={"contact"}
               style={({ isActive }) => {
@@ -134,6 +146,7 @@ const AsideNav = () => {
               padding: "1em",
             }}
           >
+            <Settings />
             <NavLink
               to={"setting"}
               style={({ isActive }) => {
@@ -153,6 +166,7 @@ const AsideNav = () => {
               padding: "1em",
             }}
           >
+            <Logout />
             <NavLink
               to={"/"}
               style={{
